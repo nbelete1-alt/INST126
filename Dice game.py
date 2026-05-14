@@ -4,7 +4,6 @@ import os
 target_score = 50
 save_file = "scores.txt"
 
-
 def throw_dice(num=3):
     return [int(x) for x in np.random.randint(low=1, high=7, size=num)]
 
@@ -13,7 +12,6 @@ def got_tuple_out(dice):
 
 def find_locked(dice):
     locked_list = []
-
     for i in range(len(dice)):
         for j in range(i + 1, len(dice)):
             if dice[i] == dice[j]:
@@ -21,7 +19,6 @@ def find_locked(dice):
                     locked_list.append(i)
                 if j not in locked_list:
                     locked_list.append(j)
-
     return locked_list
 
 """AI helped me with this"""
@@ -60,23 +57,19 @@ def do_turn(player):
 
     while game_going:
         print_dice(dice, locked_list)
-
         if got_tuple_out(dice):
             print("Tuple out! 0 points.")
             return 0
 
         total = sum(dice)
         print("Total:", total)
-
         if len(locked_list) == 3:
             print("All locked. Banking " + str(total) + " points.")
             return total
-
         try:
             answer = input("Roll again? (y/n): ").lower()
         except EOFError:
             return total
-
         if answer == "n":
             return total
         elif answer == "y":
@@ -107,7 +100,6 @@ def start_game():
             pts = do_turn(player)
             scores[player] += pts
             print(f"{player}: {scores[player]} pts")
-
             if scores[player] >= target_score:
                 print("\n" + player + " wins!")
                 write_to_file(scores, player)
